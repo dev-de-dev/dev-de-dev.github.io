@@ -9,26 +9,25 @@
 
 module.exports = {
     js: [
-      // utility libraries
-      'vendor/jquery/dist/jquery.min.js',
 
+      'node_modules/jquery/dist/jquery.min.js',
       // Angular components
-      'vendor/angular/angular.js',
-      'vendor/angular-ui-router/release/angular-ui-router.min.js',
-      'vendor/angular-resource/angular-resource.min.js',
-      'vendor/angular-mocks/angular-mocks.js',
+      'node_modules/angular/angular.js',
+      'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+      'node_modules/angular-mocks/angular-mocks.js',
 
-      // Angular Material
-      'vendor/angular-animate/angular-animate.min.js',
-      'vendor/angular-aria/angular-aria.min.js',
-      'vendor/angular-material/angular-material.min.js',
+      // NgMap
+      'node_modules/ngmap/build/scripts/ng-map.min.js',
 
-      // Local storage
-      'vendor/angular-local-storage/dist/angular-local-storage.min.js',
+      // utility libraries
+      'node_modules/materialize-css/dist/js/materialize.min.js',
+      'node_modules/angular-materialize/src/angular-materialize.min.js',
+      'node_modules/angular-utils-pagination/dirPagination.js',
+
 
       // Modernizer
-      'vendor/modernizr/modernizr.js'
+      'node_modules/modernizr/modernizr.js'
     ],
-    css: [ ],
+    css: ['node_modules/materialize-css/dist/css/materialize.min.css'],
     assets: [ ]
 };

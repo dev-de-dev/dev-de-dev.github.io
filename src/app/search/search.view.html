@@ -1,0 +1,59 @@
+<div class="container">
+  <form name="searchForm" class="row" ng-submit="vm.submit(searchForm)">
+    <img class="col s3 logo" src="/assets/images/logo.png" />
+    <div class="col s6">
+      <div class="input-field light-blue-text col s12 location-field">
+        <!--<label for="location">Location</label>-->
+        <i class="material-icons location_on right">location_on</i>
+        <input places-auto-complete size=10
+               ng-model="address"
+               component-restrictions="{country:'us'}"
+               types="['geocode']"
+               type="text" required
+               id="location"
+               name="location"
+               on-place-changed="vm.placeChanged()"
+               placeholder="Enter a city or a location, or an airport" />
+      </div>
+      <div class="input-container light-blue-text col s12 l6">
+        <label for="pickupDate">Pickup Date</label>
+        <input type="date"
+               required
+               ng-model="pickupDate"
+               class="datepicker browser-default"
+               name="pickupDate"
+               id="pickupDate"/>
+      </div>
+      <div class="input-container browser-default light-blue-text col s12 l6">
+        <label for="pickupTime">Pickup Time</label>
+        <input id="pickupTime"
+               name="pickupTime"
+               ng-model="pickupTime"
+               type="time" required
+               class="timepicker browser-default"/>
+      </div>
+      <div class="input-container light-blue-text col s12 l6">
+        <label for="dropoffDate">Drop off Date</label>
+        <input id="dropoffDate"
+               name="dropoffDate"
+               ng-model="dropoffDate"
+               type="date" required
+               class="datepicker browser-default"/>
+      </div>
+      <div class="input-container light-blue-text col s12 l6">
+        <label for="dropoffTime">Drop Off Time</label>
+        <input id="dropoffTime"
+               name="dropoffTime"
+               ng-model="dropoffTime"
+               type="time" required
+               class="timepicker browser-default"/>
+      </div>
+
+    </div>
+    <div class="col s3 button-row">
+      <button type="submit" class="waves-effect waves-light light-blue btn right"
+              ng-disabled="(searchForm.$invalid || searchForm.$pristine)">FIND CARS
+      </button>
+    </div>
+  </form>
+</div>

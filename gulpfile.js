@@ -1,9 +1,7 @@
 var gulp        = require('gulp'),
-    browserify  = require('browserify'),
-    source      = require('vinyl-source-stream'),
-    buffer      = require('vinyl-buffer'),
     browserSync = require('browser-sync'),
     del         = require('del'),
+    url = require('url'),
     karma       = require('karma').Server;
 
 var $           = require('gulp-load-plugins')();
@@ -14,8 +12,8 @@ var pkg         = require('./package.json');
  * Default tasks
  */
 gulp.task('default', ['serve']);
-gulp.task('build', ['clean', 'scripts', 'sass', 'templates', 'minify:images', 'browserify', 'copy:vendor:css', 'copy:index', 'copy:assets']);
-gulp.task('test', ['eslint', 'unit', 'e2e']);
+gulp.task('build', ['clean', 'scripts:app','scripts:vendor', 'eslint','sass', 'templates', 'minify:images', 'copy:vendor:css', 'copy:index', 'copy:assets']);
+// gulp.task('test', ['eslint', 'unit', 'e2e']);
 
 /**
  * Tasks needed to update/run protractor.
@@ -30,7 +28,7 @@ gulp.task('webdriver-start', $.protractor.webdriver_start);
 gulp.task('watch', function() {
   gulp.watch('src/**/*.scss', ['sass']);
   gulp.watch('src/**/*.html', ['templates', browserSync.reload]);
-  gulp.watch('src/**/*.js', ['scripts', 'unit', 'eslint', browserSync.reload]);
+  gulp.watch('src/**/*.js', ['scripts:app','eslint', browserSync.reload]);
   gulp.watch('src/index.html', ['copy:index', browserSync.reload]);
 });
 
@@ -38,10 +36,16 @@ gulp.task('watch', function() {
  * Serves and watches the build folder.
  */
 gulp.task('serve', ['build', 'watch'], function() {
+
+  // const jsonPlaceholderProxy = proxyMiddleware('/search', {
+  //   target: "http://api.hotwire.com/v1/search",
+  //   changeOrigin: true,
+  //   logLevel: 'debug'
+  // });
+
   browserSync({
-    server: {
-      baseDir: config.serve.baseDir                         // Serve the chosen folder.
-    },
+    proxy: "http://api.hotwire.com",
+    serveStatic: ['public'],
     open: false,                                            // Stop the browser from opening a new window automatically.
     port: config.serve.port                                 // Decide which port to serve on. Default is 3000 for development and 4000 for production.
   })
@@ -50,13 +54,25 @@ gulp.task('serve', ['build', 'watch'], function() {
 /**
  * Builds, minifies and concatenates javascript files into one single file.
  */
-gulp.task('scripts', function() {
-  return gulp.src(config.scripts.sources)                   // Get all js files
-    .pipe($.concat(config.scripts.destinationName))         // Concatenate them into one file
+gulp.task('scripts:app', function() {
+  return gulp.src(config.scripts.app.sources)                   // Get all js files
+    .pipe($.concat(config.scripts.app.destinationName))         // Concatenate them into one file
     .pipe($.ngAnnotate())                                   // Inject angular dependencies and prevent minfier from mangling them.
     .pipe(config.isProduction ? $.uglify() : $.util.noop()) // Minify the file if it's for production
     .pipe($.header(config.banner, { pkg : pkg } ))          // Add a comment to the top of the file to include our package info (copyright etc.)
-    .pipe(gulp.dest(config.scripts.destinationFolder));     // Output it to the destination folder
+    .pipe(gulp.dest(config.scripts.app.destinationFolder));     // Output it to the destination folder
+});
+
+/**
+ * Builds, minifies and concatenates javascript files into one single file.
+ */
+gulp.task('scripts:vendor', function() {
+  return gulp.src(config.scripts.vendor.sources)                   // Get all js files
+    .pipe($.concat(config.scripts.vendor.destinationName))         // Concatenate them into one file
+    .pipe($.ngAnnotate())                                   // Inject angular dependencies and prevent minfier from mangling them.
+    .pipe(config.isProduction ? $.uglify() : $.util.noop()) // Minify the file if it's for production
+    .pipe($.header(config.banner, { pkg : pkg } ))          // Add a comment to the top of the file to include our package info (copyright etc.)
+    .pipe(gulp.dest(config.scripts.vendor.destinationFolder));     // Output it to the destination folder
 });
 
 /**
@@ -99,7 +115,7 @@ gulp.task('minify:images', function() {
  * Performs an eslint code check analysis.
  */
 gulp.task('eslint', function () {
-  return gulp.src(config.scripts.sources)                   // Get all js files
+  return gulp.src(config.scripts.app.sources)                   // Get all js files
     .pipe($.eslint())                                       // Run them through eslint to try and find error in the code
     .pipe($.eslint.format())                                // Output the results to the console.
     .pipe($.eslint.failAfterError());                       // Stop a stream if an ESLint error has been reported, but wait for all files to be processed first.
@@ -116,17 +132,17 @@ gulp.task('unit', function(done) {
   });
 });
 
-/**
- * Bundles node dependencies (Angular, ui-router, Angular Material etc.) into one single file.
- */
-gulp.task('browserify', function() {
-  return browserify(config.browserify.sources)              // Get all node module files
-    .bundle()                                               // Bundle them all into one file
-    .pipe(source(config.browserify.destinationName))        // Pass is through vinyl-source-stream to rename it
-    .pipe(config.isProduction ? buffer() : $.util.noop())   // Pass is through vinyl-buffer so that 'uglify' can use it
-    .pipe(config.isProduction ? $.uglify() : $.util.noop()) // Minify the file if it's for production
-    .pipe(gulp.dest(config.browserify.destinationFolder));  // Output it to the destination folder
-});
+// /**
+//  * Bundles node dependencies (Angular, ui-router, Angular Material etc.) into one single file.
+//  */
+// gulp.task('browserify', function() {
+//   return browserify(config.browserify.sources)              // Get all node module files
+//     .bundle()                                               // Bundle them all into one file
+//     .pipe(source(config.browserify.destinationName))        // Pass is through vinyl-source-stream to rename it
+//     .pipe(config.isProduction ? buffer() : $.util.noop())   // Pass is through vinyl-buffer so that 'uglify' can use it
+//     .pipe(config.isProduction ? $.uglify() : $.util.noop()) // Minify the file if it's for production
+//     .pipe(gulp.dest(config.browserify.destinationFolder));  // Output it to the destination folder
+// });
 
 /**
  * Copies the index.html file into the build folder

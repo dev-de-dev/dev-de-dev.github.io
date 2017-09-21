@@ -1,0 +1,94 @@
+/**
+ * hotwire v1.0.0
+ * Copyright (c) 2017 Debashish Mohapatra
+ * Licensed under MIT
+ */
+.tabs .indicator {
+  background-color: #03a9f4; }
+
+.btn-floating.halfway-fab {
+  bottom: 5px;
+  box-shadow: 1px 1px 0.5 red; }
+
+.pagination li.active {
+  background-color: #03a9f4 !important;
+  color: #FFF !important; }
+
+/* Custom Stylesheet */
+body {
+  font-family: "Source Sans Pro", Helvetica, Arial, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 100; }
+
+.image-bg-holder {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0; }
+
+.container {
+  padding: 1rem; }
+
+nav {
+  height: 150px; }
+  nav ul a,
+  nav .brand-logo {
+    color: #444; }
+
+p {
+  line-height: 2rem; }
+
+.title {
+  margin-top: 1.35rem; }
+
+.parallax-container {
+  height: 300px; }
+
+.toast {
+  background-color: red !important; }
+
+footer.page-footer {
+  background-color: transparent !important;
+  margin: 0; }
+  footer.page-footer .container {
+    background-color: transparent; }
+    footer.page-footer .container a {
+      margin: 0 1rem; }
+
+
+.button-row button.btn {
+  margin-top: 9rem; }
+  .button-row button.btn[disabled] {
+    color: #FFF !important;
+    background-color: #03a9f4 !important;
+    opacity: 0.5; }
+
+.input-field.location-field {
+  padding: 0 !important;
+  position: relative; }
+  .input-field.location-field i.material-icons {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 50px; }
+  .input-field.location-field input {
+    margin-bottom: 10px;
+    padding-left: 50px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #03a9f4 !important; }
+
+.input-container {
+  padding: 0 !important;
+  box-sizing: border-box  !important; }
+  .input-container input {
+    margin-bottom: 10px;
+    width: 100%; }
+
+card .card-content {
+  padding: 10px; }

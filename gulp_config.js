@@ -1,37 +1,44 @@
 var pkg = require('./package.json');
+var vendor = require('./vendor.config.js');
 var isProduction = 'production' === process.env.NODE_ENV;
 
 module.exports = {
   scripts: {
-    sources: [
-      'src/app/**/*.js',
-      '!src/app/**/*.spec.js',
-      '!src/app/**/*.e2e.js'
-    ],
-    destinationFolder: isProduction ? 'production/assets/scripts' : 'public/assets/scripts',
-    destinationName: pkg.name + '.js'
+    app:  {
+      sources: [
+        'src/app/**/*.js',
+        '!src/app/**/*.spec.js',
+        '!src/app/**/*.e2e.js'
+      ],
+      destinationFolder: isProduction ? 'production/assets/scripts' : 'public/assets/scripts',
+      destinationName: pkg.name + '.js'
+    },
+    vendor: {
+      sources: vendor.js,
+      destinationFolder: isProduction ? 'production/assets/scripts' : 'public/assets/scripts',
+      destinationName: 'bundle.js'
+    }
   },
   sass: {
     sources : ['src/app/**/*.scss'],
     destinationFolder: isProduction ? 'production/assets/css' : 'public/assets/css',
     destinationName: pkg.name + '.css'
   },
-  browserify: {
-    sources : ['./vendor_files.js'],
-    destinationFolder: isProduction ? 'production/assets/scripts' : 'public/assets/scripts',
-    destinationName: 'bundle.js'
-  },
   templates: {
     sources : ['src/app/**/*.html'],
-    destinationFolder: isProduction ? 'production/assets/scripts' : 'public/assets/scripts',
+    destinationFolder: isProduction ? 'production/assets/scripts' : 'public/assets/scripts'
+  },
+  fonts: {
+    sources : ['node_modules/materialize-css/dist/fonts/**'],
+    destinationFolder: isProduction ? 'production/assets/fonts' : 'public/assets/fonts'
   },
   images: {
     sources : ['src/assets/images/*'],
     destinationFolder : isProduction ? 'production/assets/images' : 'public/assets/images'
   },
   vendor: {
-    sources : ['node_modules/angular-material/angular-material.min.css'],
-    destinationFolder: isProduction ? 'production/assets/css' : 'public/assets/css',
+    sources : vendor.css,
+    destinationFolder: isProduction ? 'production/assets/css' : 'public/assets/css'
   },
   assets: {
     sources : ['src/assets/images/favicon.ico'],

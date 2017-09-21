@@ -1,4 +1,8 @@
-angular.module('layout.controllers.LayoutCtrl', [])
-  .controller('LayoutCtrl', function() {
+(function () {
+  'use strict';
+  angular.module('app.layout.controllers', [])
+    .controller('LayoutCtrl', function() {
 
-  });
+    });
+
+})();

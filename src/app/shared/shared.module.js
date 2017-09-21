@@ -1,4 +1,6 @@
-angular.module('app.shared', [
-  'shared.directives.backButton',
-  'shared.services.Utils'
-]);
+(function () {
+  'use strict';
+
+  angular.module('app.shared', ['app.shared.service']);
+
+})();

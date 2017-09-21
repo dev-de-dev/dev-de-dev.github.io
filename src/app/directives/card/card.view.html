@@ -1,0 +1,52 @@
+<div class="card" ng-class="{'horizontal' : !!vm.listView}">
+  <div class="card-image" ng-if="!vm.listView">
+    <img class="activator" src="/assets/images/car-thumbnail.jpg">
+    <a message="Saved!" duration="500" toast='click'
+       class="btn-floating halfway-fab waves-effect waves-light white">
+      <i class="fa fa-heart red-text"></i>
+    </a>
+  </div>
+  <div class="card-image" ng-if="!!vm.listView">
+    <img src="/assets/images/car-thumbnail.jpg"/>
+  </div>
+  <div class="card-content" ng-if="!vm.listView">
+    <span class="card-title activator grey-text text-darken-4">{{vm.data.CurrencyCode}} {{vm.data.DailyRate}} <small>daily</small>
+      <i class="material-icons right">more_vert</i></span>
+    <p><a href="{{vm.data.DeepLink}}" target="_blank" class="waves-effect waves-light light-blue btn">Book Now</a></p>
+  </div>
+  <div class="card-reveal"  ng-if="!vm.listView">
+    <span class="card-title grey-text text-darken-4">Details<i class="material-icons right">close</i></span>
+    <p ng-if="vm.data.PickupAirport.length">Airport : {{vm.data.PickupAirport}}</p>
+    <p ng-if="vm.data.RentalAgency">Agency: {{vm.data.RentalAgency}}</p>
+    <p ng-if="vm.data.VendorLocation">Location: {{vm.data.VendorLocation}}</p>
+    <p>{{vm.data.LocationDescription}}</p>
+    <p>From {{vm.data.PickupDay}} {{vm.data.PickupTime}} Till {{vm.data.DropoffDay}} {{vm.data.DropoffTime}}</p>
+    <p>SubTotal : {{vm.data.CurrencyCode}} {{vm.data.SubTotal}}</p>
+    <p>Taxes and Fees : {{vm.data.CurrencyCode}} {{vm.data.TaxesAndFees}}</p>
+    <p>Total: {{vm.data.CurrencyCode}} {{vm.data.TotalPrice}}</p>
+  </div>
+  <div class="card-stacked"  ng-if="!!vm.listView">
+    <div class="card-content">
+      <h5 class="right-align">{{vm.data.CurrencyCode}} {{vm.data.DailyRate}} <small>daily</small></h5>
+      <div class="col s12 l8">
+        <p ng-if="vm.data.PickupAirport.length">Airport: {{vm.data.PickupAirport}}</p>
+        <p ng-if="vm.data.RentalAgency">Agency: {{vm.data.RentalAgency}}</p>
+        <p ng-if="vm.data.VendorLocation">Location: {{vm.data.VendorLocation}}</p>
+        <p>{{vm.data.LocationDescription}}</p>
+        <p>From {{vm.data.PickupDay}} {{vm.data.PickupTime}} Till {{vm.data.DropoffDay}} {{vm.data.DropoffTime}}</p>
+      </div>
+      <div class="col s12 l4 right-align">
+        <p>SubTotal : {{vm.data.CurrencyCode}} {{vm.data.SubTotal}}</p>
+        <p>Taxes and Fees : {{vm.data.CurrencyCode}} {{vm.data.TaxesAndFees}}</p>
+        <p>Total: {{vm.data.CurrencyCode}} {{vm.data.TotalPrice}}</p>
+      </div>
+    </div>
+    <div class="card-action">
+      <a href="{{vm.data.DeepLink}}" target="_blank" class="waves-effect waves-light light-blue btn">Book Now</a>
+      <a message="Saved!" duration="500" toast='click'
+         class="btn-floating halfway-fab waves-effect waves-light white">
+        <i class="fa fa-heart red-text"></i>
+      </a>
+    </div>
+  </div>
+</div>
